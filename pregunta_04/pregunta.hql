@@ -45,4 +45,4 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
-SELECT DISTINCT(c5) FROM tbl0 ORDER BY EXPLODE(c5);
+SELECT DISTINCT(c5) FROM tbl0 ORDER BY c5;
