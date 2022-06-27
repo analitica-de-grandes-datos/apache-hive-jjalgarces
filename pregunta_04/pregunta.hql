@@ -45,4 +45,8 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
-SELECT DISTINCT(c5) FROM tbl0 ORDER BY c5;
+CREATE TABLE docs AS SELECT letter FROM (SELECT explode(c5) AS letter FROM tbl0)w 
+ORDER BY letter;
+
+INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT DISTINCT(letter) FROM docs; 
