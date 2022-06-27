@@ -46,3 +46,10 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+CREATE TABLE docs_0 AS SELECT c1, c2 key FROM tbl0;
+
+CREATE TABLE docs_1 AS SELECT c1, key, value FROM tbl1; 
+
+INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+
+SELECT d1.* FROM docs_0 d0, docs_1 d1 WHERE d0.c1 = d1.c1 and d0.key = d1.key;
