@@ -16,7 +16,7 @@ CREATE TABLE tbl0 (
     c1 INT,
     c2 STRING,
     c3 INT,
-    c4 DATE,
+    c4 STRING,
     c5 ARRAY<CHAR(1)>, 
     c6 MAP<STRING, INT>
 )
