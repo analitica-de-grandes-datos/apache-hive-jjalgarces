@@ -51,4 +51,4 @@ CREATE TABLE years_counts AS SELECT (YEAR(c4)) annio, letter FROM tbl0 LATERAL V
 
 INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 
-SELECT annio, letter COUNT(1) cant FROM years_counts GROUP BY annio, letter ORDER BY annio, letter ASC;
+SELECT annio, letter count(1) cant FROM years_counts GROUP BY annio, letter ORDER BY annio, letter ASC;
