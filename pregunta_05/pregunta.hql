@@ -46,7 +46,9 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 */
 
 DROP TABLE IF EXISTS years_counts;
-CREATE TABLE years_counts AS SELECT (YEAR(c4)) _year, letter FROM tbl0 LATERAL VIEW EXPLODE(c5) list_letter AS letter;
+
+CREATE TABLE years_counts AS SELECT (YEAR(c4)) _year, letter FROM tbl0 LATERAL VIEW explode(c5) list_letter AS letter;
+
 INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 
-SELECT _year, letter COUNT(1) cant FROM years_count GROUP BY _year, letter ORDER BY _year, letter ASC;
+SELECT _year, letter COUNT(1) cant FROM years_counts GROUP BY _year, letter ORDER BY _year, letter ASC;
