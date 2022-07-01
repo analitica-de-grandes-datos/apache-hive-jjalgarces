@@ -47,3 +47,11 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+CREATE TABLE docs AS SELECT c2, map_values(c6) AS val FROM tbl0;
+
+CREATE TABLE docs_1 AS SELECT c2, numeros FROM docs
+LATERAL VIEW explode(val) list_num AS numeros; 
+
+INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' COLLECTION ITEMS TERMINATED BY ':'
+
+SELECT c2, sum(numeros) FROM docs_1 GROUP BY c2;
