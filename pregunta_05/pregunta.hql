@@ -16,7 +16,7 @@ CREATE TABLE tbl0 (
     c1 INT,
     c2 STRING,
     c3 INT,
-    c4 DATE,
+    c4 STRING,
     c5 ARRAY<CHAR(1)>, 
     c6 MAP<STRING, INT>
 )
@@ -45,3 +45,10 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+DROP TABLE IF EXISTS years_counts;
+
+CREATE TABLE years_counts AS SELECT (YEAR(c4)) annio, letter FROM tbl0 LATERAL VIEW explode(c5) list_letter AS letter;
+
+INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+
+SELECT annio, letter, count(1) AS cant FROM years_counts GROUP BY annio, letter ORDER BY annio, letter ASC;

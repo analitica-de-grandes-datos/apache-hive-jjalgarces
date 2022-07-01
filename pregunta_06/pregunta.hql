@@ -46,3 +46,17 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+-- CREATE TABLE docs AS SELECT UPPER(letter) FROM (SELECT c5 AS letter FROM tbl0)w;
+
+-- INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+-- SELECT * FROM docs; 
+
+CREATE TABLE datos1 AS SELECT transform(c5) USING '/bin/cat' AS (my_str) FROM tbl0;
+
+CREATE TABLE datos1_ AS SELECT 
+UPPER(regexp_replace(my_str, '\\[|\\]','')) AS final_string FROM datos1;
+
+CREATE TABLE datos1_1 AS SELECT regexp_replace(final_string, '\\"|\\"','') AS final_ FROM datos1_;
+
+INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT regexp_replace(final_, '\\,','\\:') FROM datos1_1;

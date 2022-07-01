@@ -15,3 +15,12 @@ Escriba el resultado a la carpeta `output` de directorio de trabajo.
 */
 
 
+DROP TABLE IF EXISTS docs;
+CREATE TABLE docs (letter STRING, fec DATE, num INT)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+TBLPROPERTIES ("skip.header.line.count"="0");
+
+LOAD DATA LOCAL INPATH 'data.tsv' OVERWRITE INTO TABLE docs;
+INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+
+SELECT DISTINCT(num) FROM docs ORDER BY num LIMIT 5;
