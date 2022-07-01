@@ -30,3 +30,11 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+CREATE TABLE docs AS SELECT map_keys(c3) AS val FROM t0;
+
+CREATE TABLE docs_1 AS SELECT letras FROM docs
+LATERAL VIEW explode(val) list_let AS letras; 
+
+INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' COLLECTION ITEMS TERMINATED BY ':'
+
+SELECT letras, COUNT(1) AS count FROM docs_1 GROUP BY letraas;
